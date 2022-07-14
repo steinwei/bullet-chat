@@ -2,13 +2,10 @@
   "root": true,
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint", "prettier"],
-  "extends": [
-    "eslint:recommended",
-    "prettier"
-  ],
+  "extends": ["eslint:recommended", "prettier"],
   "env": {
     "browser": true,
-    "node": true
+    "node": false
   },
   "rules": {
     "prettier/prettier": "error"

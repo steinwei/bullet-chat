@@ -13,7 +13,7 @@ export class Track {
     this.barrages.shift();
   }
 
-  push(...items) {
+  push(items) {
     this.barrages.push(items);
   }
 
