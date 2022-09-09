@@ -21,15 +21,16 @@ export class Commander {
       return false;
     }
 
-    let speed = 20;
     const track = this.tracks[trackId];
     // const trackOffset = track.offset;
     const trackWidth = this.trackWidth;
 
-    //   todo
-    speed = Math.min(speed, 50);
+    let speed = 0;
     const measureText = this.ctx.canvasCtx.measureText(barrage);
+
     const { width } = measureText;
+    const average = Math.floor(trackWidth / width);
+    speed = Math.max(speed, average);
     const normaliseBarrage = Object.assign({}, barrage, {
       speed,
       offset: trackWidth,
@@ -77,9 +78,17 @@ export class Commander {
     let removeTop = false;
     this.forEach((track, trackIndex) => {
       track.forEach((barrage, barrageIndex) => {
-        const { fontColor, text, offset, speed, width, fontSize } = barrage;
+        const {
+          fontColor,
+          text,
+          offset,
+          speed,
+          width,
+          fontSize,
+          fontFamily = "Arial",
+        } = barrage;
         ctx.fillStyle = fontColor;
-        ctx.font = `${fontSize}px`;
+        ctx.font = `${fontSize}px ${fontFamily}`;
         ctx.fillText(text, offset, (trackIndex + 1) * trackHeight);
 
         barrage.offset -= speed;

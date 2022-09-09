@@ -3,7 +3,7 @@ import { Commander } from "./commander";
 
 const defaultConfig = {
   maxTrack: 4,
-  fontSize: 20,
+  fontSize: 50,
   fontColor: "#fff",
 };
 
@@ -13,16 +13,30 @@ export class BulletChat {
       ...defaultConfig,
       ...options,
     };
-    // this.options = { ...options };
     this.el = options.el;
-    this.maxTrack = options.maxTrack;
+    this.maxTrack = options.maxTrack || defaultConfig;
     this.trackWidth = options.el.offsetWidth;
     this.trackHeight = options.trackHeight;
     this.duration = options.duration;
     this.canvas = options.el;
     this.canvasCtx = options.el.getContext("2d");
+    this.options = this.makeOptions(options);
 
     this.init();
+  }
+
+  makeOptions(options) {
+    const { fontSize, fontColor, duration, trackHeight } = Object.assign(
+      defaultConfig,
+      options
+    );
+    const handled = {
+      fontSize,
+      fontColor,
+      duration,
+      trackHeight,
+    };
+    return handled;
   }
 
   init() {
@@ -38,7 +52,7 @@ export class BulletChat {
     this.watcher.start();
   }
 
-  // todo: register evt
+  // todo: register event
   // addEvent() {}
 
   render() {

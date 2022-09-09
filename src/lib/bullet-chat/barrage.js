@@ -12,17 +12,33 @@ export class Barrage {
     this.ctx = ctx;
   }
 
+  makeOptions(options) {
+    const { fontSize, fontColor, duration, trackHeight } = Object.assign(
+      defaultConfig,
+      options
+    );
+    const handled = {
+      fontSize,
+      fontColor,
+      duration,
+      trackHeight,
+    };
+    return handled;
+  }
+
   add(barrage) {
-    const { text, fontColor, fontSize } = { ...defaultConfig, ...barrage };
+    const { text, fontColor, fontSize } = {
+      ...this.makeOptions(this.ctx.options),
+      ...barrage,
+    };
     const ctx = this.ctx.canvasCtx;
     ctx.font = `${fontSize}px`;
     const { width } = ctx.measureText(text);
     const barrageOpt = {
-      ...defaultConfig,
       text,
       width,
-      color: fontColor,
-      size: fontSize,
+      fontColor,
+      fontSize,
       speed: 0,
       offset: 0,
     };
